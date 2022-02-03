@@ -1,0 +1,35 @@
+- name: NGINX | Update NGINX to latest
+  become: yes
+  hosts: dvserver
+  remote_user: dvserver
+  tasks:
+  - name: NGINX | Adding NGINX signing key
+    apt_key: 
+      url: http://nginx.org/keys/nginx_signing.key 
+      state: present 
+
+  - name: NGINX | Adding NGINX apt repository
+    apt_repository: 
+      repo: 'deb http://nginx.org/packages/ubuntu/ focal nginx' 
+      state: present 
+      filename: nginx 
+      update_cache: yes
+  
+  - name: Update and upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+  - name: NGINX | Installing NGINX
+    apt:
+      pkg: nginx
+      install_recommends: no
+      force: yes
+      dpkg_options: 'force-confdef,force-confold'
+      state: latest
+
+  - name: NGINX | restarting NGINX
+    service:
+      name: nginx
+      state: restarted
+      
