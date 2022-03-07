@@ -1,2 +1,2 @@
 # security-server-ansible-conf
-Ansible Configuration for cybersecurity project
+My simple Ansible playbook to update nginx for cybersecurity project
